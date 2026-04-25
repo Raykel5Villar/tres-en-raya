@@ -1,4 +1,4 @@
-Raykel Manuel Villar Antuna
+Raykel Manuel Villar Antuna - 10052552
 
 Este Juego en el Clasico Tres en Raya, pero con un toque dominicano. El usuario puede elegir entre el tema Baseball o Musica.
 
