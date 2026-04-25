@@ -17,34 +17,36 @@
 
 body {
   margin: 0;
-  display: flex;
   place-items: center;
   align-items: center;
   justify-content: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
 
 .board {
   text-align: center;
   min-height: 100vh;
   transition: all 0.5s ease;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 20px;
+  position: relative;
+  z-index: 1;
 }
 
-.board h1 {
-  color: #eee;
-  margin-bottom: 16px;
+.board::before {
+  content: "";
+  position: fixed;  
+  inset: 0;
+  z-index: -1;
+}
+
+.board::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: -1;
 }
 
 .board button {
@@ -63,6 +65,7 @@ body {
   color: #222;
 }
 
+
 .board .game {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -72,67 +75,11 @@ body {
   backdrop-filter: blur(10px);
 }
 
-.turn {
-  background: rgba(255,255,255,0.1);
-  padding: 10px;
-}
-
-
-.turn .square,
-.winner .square {
-  width: 70px;
-  height: 70px;
-  pointer-events: none;
-  border-color: transparent;
-}
-
-.square.is-selected {
-  background: #09f;
-}
-
-.theme-carnival .square.is-selected {
-  background: gold;
-  color: black;
-}
-
-.theme-lidom .square.is-selected {
-  background: #CE1126;
-}
-
-.theme-music .square.is-selected {
-  background: #00c6ff;
-}
-
-.winner {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  display: grid;
-  place-items: center;
-  background-color: rgba(0, 0, 0, 0.7);
-}
-
-.theme-carnival .winner .text {
-  background: #ff0080;
-}
-
-.theme-lidom .winner .text {
-  background: #111;
-  border: 2px solid #CE1126;
-}
-
-.theme-music .winner .text {
-  background: #1f4068;
-}
-
-.winner .win {
-  margin: 0 auto;
-  width: fit-content;
-  border-radius: 10px;
-  display: flex;
-  gap: 15px;
+.game {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 15px;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
 }
 
 .square {
@@ -151,36 +98,13 @@ body {
   transform: scale(1.08);
 }
 
-.theme-carnival {
-  background: radial-gradient(circle at top, #ff0080, #ff8c00, #ffd700);
-  color: white;
+.theme-lidom::before {
+  background-image: url('./images/Lidom_BackGround_PC.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.theme-carnival .game {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.theme-carnival .square {
-  background: linear-gradient(145deg, #ffcc00, #ff0066);
-  border: none;
-  color: white;
-  box-shadow: 0 0 15px rgba(255, 0, 150, 0.7);
-}
-
-.theme-carnival .square:hover {
-  box-shadow: 0 0 25px #fff;
-}
-
-.theme-carnival button {
-  background: linear-gradient(to right, #ff0080, #ff8c00);
-}
-
-
-
-.theme-lidom {
-  background: linear-gradient(to right, #001f3f, #7b0000);
-  color: white;
-}
 
 .theme-lidom .game {
   background: rgba(0, 0, 0, 0.6);
@@ -206,11 +130,13 @@ body {
 }
 
 
-
-.theme-music {
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  color: white;
+.theme-music::before {
+  background-image: url('./images/Music_BackGround_PC.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
+
 
 .theme-music .game {
   background: rgba(255, 255, 255, 0.05);
@@ -228,4 +154,88 @@ body {
 
 .theme-music button {
   background: linear-gradient(to right, #00c6ff, #0072ff);
+}
+
+.winner {
+  position: fixed;     
+  inset: 0;             
+  display: grid;
+  place-items: center;
+  background-color: rgba(0, 0, 0, 0.65);
+  z-index: 10;          
+}
+
+.winner .text {
+  min-width: 260px;
+  max-width: 300px;
+  padding: 25px 20px;
+  border-radius: 14px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+}
+
+.winner .win {
+  display: flex;
+  justify-content: center;
+}
+
+.winner .square {
+  width: 70px;
+  height: 70px;
+  border: 2px solid white;
+  background: rgba(255,255,255,0.05);
+}
+
+.winner button {
+  width: 100%;
+}
+
+.theme-lidom .winner .text {
+  background: #111;
+  border: 2px solid #CE1126;
+  box-shadow: 0 0 20px rgba(206, 17, 38, 0.6);
+}
+
+.theme-music .winner .text {
+  background: #1f4068;
+  box-shadow: 0 0 20px rgba(0, 198, 255, 0.6);
+}
+
+.turn {
+  display: flex;
+  justify-content: center;       
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.square.is-selected {
+  background: #09f;
+}
+
+.theme-lidom .square.is-selected {
+  background: #CE1126;
+}
+
+.theme-music .square.is-selected {
+  background: #00c6ff;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.piece {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  pointer-events: none;
 }
