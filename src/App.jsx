@@ -1,6 +1,6 @@
 import confetti from "canvas-confetti"
 import { useState } from "react"
-import licey from './images/licey.png'
+import licey from './images/Licey.png'
 import escogido from './images/Escogido.png'
 import merengue from './images/Merengue.png'
 import bachata from './images/Bachata.png'
