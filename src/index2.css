@@ -1,13 +1,7 @@
 :root {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #f8fafc;
+  background: #101114;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -15,227 +9,336 @@
   -webkit-text-size-adjust: 100%;
 }
 
-body {
-  margin: 0;
-  place-items: center;
-  align-items: center;
-  justify-content: center;
+* {
+  box-sizing: border-box;
 }
 
+html {
+  min-width: 320px;
+  min-height: 100%;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+button {
+  font: inherit;
+}
 
 .board {
-  text-align: center;
-  min-height: 100vh;
-  transition: all 0.5s ease;
-  display: flex;
-  align-items: center;
-  gap: 20px;
+  --panel: rgba(10, 12, 18, 0.72);
+  --panel-border: rgba(255, 255, 255, 0.22);
+  --accent: #ce1126;
+  --accent-strong: #002d62;
+  --cell: rgba(8, 10, 14, 0.9);
+  --cell-border: rgba(255, 255, 255, 0.82);
+
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 100svh;
+  padding: max(18px, env(safe-area-inset-top)) 16px max(20px, env(safe-area-inset-bottom));
+  overflow: hidden;
+  text-align: center;
 }
 
-.board::before {
-  content: "";
-  position: fixed;  
-  inset: 0;
-  z-index: -1;
-}
-
+.board::before,
 .board::after {
   content: "";
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
   z-index: -1;
 }
 
-.board button {
-  padding: 10px 16px;
-  margin: 10px;
-  border: none;
-  color: white;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.board button:hover {
-  background: #eee;
-  color: #222;
-}
-
-
-.board .game {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  padding: 15px;
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
-}
-
-.game {
-  background: rgba(0, 0, 0, 0.6);
-  padding: 15px;
-  border-radius: 12px;
-  backdrop-filter: blur(6px);
-}
-
-.square {
-  width: 85px;
-  height: 85px;
-  border: 2px solid #fff;
-  display: grid;
-  place-items: center;
-  font-size: 2rem;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  border-radius: 10px;
-}
-
-.square:hover {
-  transform: scale(1.08);
-}
-
-.theme-lidom::before {
-  background-image: url('./images/Lidom_BackGround_PC.png');
+.board::before {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  transform: scale(1.02);
 }
 
-
-.theme-lidom .game {
-  background: rgba(0, 0, 0, 0.6);
-  border: 2px solid white;
+.board::after {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.7)),
+    rgba(0, 0, 0, 0.28);
 }
 
-.theme-lidom .square {
-  background: #111;
-  border: 2px solid #fff;
-  font-weight: bold;
-}
-
-.theme-lidom .square:hover {
-  background: #222;
-}
-
-.theme-lidom .square.is-selected {
-  background: #CE1126;
-}
-
-.theme-lidom button {
-  background: linear-gradient(to right, #002D62, #CE1126);
-}
-
-
-.theme-music::before {
-  background-image: url('./images/Music_BackGround_PC.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-
-.theme-music .game {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.theme-music .square {
-  background: #1f4068;
-  border: none;
-  box-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
-}
-
-.theme-music .square:hover {
-  transform: scale(1.15) rotate(2deg);
-}
-
-.theme-music button {
-  background: linear-gradient(to right, #00c6ff, #0072ff);
-}
-
-.winner {
-  position: fixed;     
-  inset: 0;             
-  display: grid;
-  place-items: center;
-  background-color: rgba(0, 0, 0, 0.65);
-  z-index: 10;          
-}
-
-.winner .text {
-  min-width: 260px;
-  max-width: 300px;
-  padding: 25px 20px;
-  border-radius: 14px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
-
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-}
-
-.winner .win {
-  display: flex;
-  justify-content: center;
-}
-
-.winner .square {
-  width: 70px;
-  height: 70px;
-  border: 2px solid white;
-  background: rgba(255,255,255,0.05);
-}
-
-.winner button {
-  width: 100%;
-}
-
-.theme-lidom .winner .text {
-  background: #111;
-  border: 2px solid #CE1126;
-  box-shadow: 0 0 20px rgba(206, 17, 38, 0.6);
-}
-
-.theme-music .winner .text {
-  background: #1f4068;
-  box-shadow: 0 0 20px rgba(0, 198, 255, 0.6);
-}
-
-.turn {
-  display: flex;
-  justify-content: center;       
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.square.is-selected {
-  background: #09f;
-}
-
-.theme-lidom .square.is-selected {
-  background: #CE1126;
-}
-
-.theme-music .square.is-selected {
-  background: #00c6ff;
+.controls,
+.game,
+.theme-selector {
+  width: min(100%, 390px);
 }
 
 .controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
   gap: 10px;
+  justify-items: center;
+  padding: 16px;
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(12px);
+}
+
+.controls h1 {
+  margin: 0;
+  font-size: clamp(2rem, 14vw, 3.4rem);
+  line-height: 0.95;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.board button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.board button:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 3px;
+}
+
+.controls > button,
+.winner button,
+.theme-selector button {
+  padding: 11px 16px;
+  background: linear-gradient(135deg, var(--accent-strong), var(--accent));
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+}
+
+.controls > button {
+  width: 100%;
+}
+
+.turn {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.turn .square,
+.winner .square {
+  width: 100%;
+  min-height: 62px;
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+
+.game {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(8px, 2.8vw, 12px);
+  padding: clamp(10px, 3vw, 14px);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(12px);
+}
+
+.square {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+  min-height: 0;
+  padding: 6px;
+  border: 2px solid var(--cell-border);
+  background: var(--cell);
+  color: #fff;
+  font-size: 2rem;
+}
+
+.square:hover {
+  transform: translateY(-1px);
+}
+
+.square.is-selected {
+  background: var(--accent);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.28);
 }
 
 .piece {
-  width: 70px;
-  height: 70px;
+  width: min(74%, 76px);
+  height: min(74%, 76px);
   object-fit: contain;
   pointer-events: none;
+  filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.42));
+}
+
+.theme-selector {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.theme-selector button {
+  width: 100%;
+}
+
+.winner {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background-color: rgba(0, 0, 0, 0.72);
+}
+
+.winner .text {
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+  width: min(100%, 320px);
+  padding: 24px;
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  background: rgba(14, 16, 22, 0.96);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+}
+
+.winner h2 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.winner .win {
+  width: 86px;
+}
+
+.winner footer,
+.winner footer button {
+  width: 100%;
+}
+
+.theme-lidom {
+  --accent: #ce1126;
+  --accent-strong: #002d62;
+  --panel: rgba(5, 18, 38, 0.78);
+  --panel-border: rgba(255, 255, 255, 0.28);
+  --cell: rgba(18, 43, 78, 0.96);
+  --cell-border: rgba(255, 255, 255, 0.96);
+}
+
+.theme-lidom::before {
+  background-image:
+    radial-gradient(circle at 18% 12%, rgba(206, 17, 38, 0.62), transparent 28%),
+    linear-gradient(145deg, rgba(0, 45, 98, 0.82), rgba(68, 8, 23, 0.72)),
+    url("./images/Lidom_BackGround.png");
+}
+
+.theme-lidom::after {
+  background:
+    linear-gradient(180deg, rgba(4, 12, 27, 0.2), rgba(4, 12, 27, 0.58)),
+    rgba(0, 0, 0, 0.16);
+}
+
+.theme-lidom .game {
+  background: rgba(4, 13, 29, 0.84);
+  border-color: rgba(255, 255, 255, 0.44);
+}
+
+.theme-lidom .square {
+  background:
+    linear-gradient(145deg, rgba(27, 62, 108, 0.98), rgba(7, 24, 52, 0.98));
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+    0 7px 18px rgba(0, 0, 0, 0.3);
+}
+
+.theme-lidom .square:hover,
+.theme-lidom .square.is-selected {
+  border-color: #fff;
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.28),
+    0 0 0 2px rgba(206, 17, 38, 0.55),
+    0 9px 22px rgba(0, 0, 0, 0.34);
+}
+
+.theme-music {
+  --accent: #00a6d6;
+  --accent-strong: #2551a3;
+  --cell: rgba(27, 51, 90, 0.92);
+  --cell-border: rgba(111, 218, 255, 0.35);
+}
+
+.theme-music::before {
+  background-image: url("./images/Music_BackGround_PC.png");
+}
+
+.theme-music .square {
+  box-shadow: 0 0 14px rgba(0, 198, 255, 0.34);
+}
+
+@media (min-width: 760px) {
+  .board {
+    display: grid;
+    grid-template-columns: minmax(260px, 320px) minmax(360px, 430px);
+    grid-template-areas:
+      "controls game"
+      "themes game";
+    align-content: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 32px;
+  }
+
+  .controls {
+    grid-area: controls;
+  }
+
+  .game {
+    grid-area: game;
+    width: min(46vw, 430px);
+  }
+
+  .theme-selector {
+    grid-area: themes;
+  }
+
+  .theme-lidom::before {
+    background-image:
+      radial-gradient(circle at 18% 18%, rgba(206, 17, 38, 0.56), transparent 26%),
+      linear-gradient(135deg, rgba(0, 45, 98, 0.76), rgba(68, 8, 23, 0.68)),
+      url("./images/Lidom_BackGround_PC.png");
+  }
+}
+
+@media (max-width: 380px) {
+  .board {
+    gap: 10px;
+    padding-inline: 10px;
+  }
+
+  .controls {
+    padding: 12px;
+  }
+
+  .controls h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (hover: none) {
+  .square:hover {
+    transform: none;
+  }
 }

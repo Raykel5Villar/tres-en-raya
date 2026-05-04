@@ -14,12 +14,12 @@ const Square = ({children, is_selected, update_board, index}) => {
   const class_name = `square ${is_selected ? 'is-selected' : ''}`
 
   const handle_click = () => {
-    update_board(index)
+    if (update_board) update_board(index)
   }
   return (
-  <div onClick= {handle_click} className={class_name}>
+  <button type="button" onClick= {handle_click} className={class_name}>
     {children}
-  </div>
+  </button>
 )}
 
 const winner_combos = [
@@ -178,8 +178,8 @@ function App() {
       </section>
       
       <section className="theme-selector"> 
-        <button onClick={() => set_tema(temas.lidom)}>⚾ LIDOM</button> 
-        <button onClick={() => set_tema(temas.music)}>🎶 Música</button> 
+        <button onClick={() => set_tema(temas.lidom)}>LIDOM</button> 
+        <button onClick={() => set_tema(temas.music)}>Musica</button> 
       </section>
 
     </main>
